@@ -34,11 +34,12 @@ const todoList = () => {
   const toDisplayableList = (list) => {
     // Format the To-Do list here, and return the output string
     // as per the format given above.
+    let today = new Date().toISOString().split("T")[0];
     if (!Array.isArray(list)) {
       console.error("Invalid input: list is not an array");
       return;
     }
-    return list.map((item, index) => `[${item.completed ? "x" : " "}] ${item.title} ${item.dueDate}`).join("\n");
+    return list.map((item, index) => item.dueDate ==  today ? `[${item.completed ? "x": " "}] ${item.title}`:`[${item.completed ? "x": " "}] ${item.title} ${item.dueDate}`).join("\n");
   };
 
   return {
