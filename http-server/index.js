@@ -1,9 +1,11 @@
 const http = require("http");
 const fs = require("node:fs");
-const argc = process.argv;
+const minimist = require("minimist");
+
+const argc = minimist(process.argv.slice(2));
 
 //port number
-const port = parseInt(argc[3]);
+const port = argc.port || 3000;
 
 let  regcontent="";
 let  projectcontent="";
