@@ -45,4 +45,6 @@ http.createServer((req,res)=>{
         default:
             res.end("page is not found"); 
     } 
-}).listen(port)
+}).listen(port,()=>{
+    console.log("Server listening on port "+port);
+})
