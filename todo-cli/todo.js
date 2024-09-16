@@ -39,7 +39,7 @@ const todoList = () => {
       console.error("Invalid input: list is not an array");
       return;
     }
-    return list.map((item, index) => item.dueDate ==  today ? `[${item.completed ? "x": " "}] ${item.title}`:`[${item.completed ? "x": " "}] ${item.title} ${item.dueDate}`).join("\n");
+    return list.map((item) => item.dueDate ==  today ? `[${item.completed ? "x": " "}] ${item.title}`:`[${item.completed ? "x": " "}] ${item.title} ${item.dueDate}`).join("\n");
   };
 
   return {
@@ -97,3 +97,5 @@ let itemsDueLater = todos.dueLater();
 let formattedItemsDueLater = todos.toDisplayableList(itemsDueLater);
 console.log(formattedItemsDueLater);
 console.log("\n\n");
+
+module.exports = todoList;
