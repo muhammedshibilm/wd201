@@ -1,2 +1,4 @@
-cd todo-cli && npm test
-npx lint-staged
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+cd todo-cli   && npm run format && npx lint-staged && npm test

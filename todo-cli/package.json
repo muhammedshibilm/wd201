@@ -4,7 +4,8 @@
   "main": "todo.js",
   "scripts": {
     "test": "jest",
-    "prepare": "husky"
+    "prepare": "husky install",
+    "format": "prettier --write ."
   },
   "author": "Muhammed Shibil M <muhammedshibilm321@gmail.com>",
   "license": "ISC",

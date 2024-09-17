@@ -1,5 +1,5 @@
 const todoList = () => {
-  let todayDay = new Date().toISOString().split("T")[0].split("-")[2];
+  let todayDay = new Date().toISOString().split("T")[0];
   let all = [];
 
   const add = (todoItem) => {
@@ -12,7 +12,7 @@ const todoList = () => {
   const overdue = () => {
     // Write the date check condition here and return the array
     // of overdue items accordingly.
-    let overdue= all.filter((item)=> item.dueDate.split("-")[2] < todayDay);
+    let overdue= all.filter((item)=> item.dueDate < todayDay);
     return overdue;
   };
 
@@ -20,14 +20,14 @@ const todoList = () => {
     // Write the date check condition here and return the array
     // of todo items that are due today accordingly.
 
-    let dueToday = all.filter((item) => item.dueDate.split("-")[2] == todayDay);
+    let dueToday = all.filter((item) => item.dueDate== todayDay);
     return dueToday;
   };
 
   const dueLater = () => {
     // Write the date check condition here and return the array
     // of todo items that are due later accordingly.
-    let dueLater = all.filter((item)=> item.dueDate.split("-")[2] > todayDay);
+    let dueLater = all.filter((item)=> item.dueDate > todayDay);
     return dueLater;
   };
 
@@ -98,4 +98,4 @@ let formattedItemsDueLater = todos.toDisplayableList(itemsDueLater);
 console.log(formattedItemsDueLater);
 console.log("\n\n");
 
-module.exports = todoList;
+module.exports = {todoList, today, yesterday , tomorrow};
