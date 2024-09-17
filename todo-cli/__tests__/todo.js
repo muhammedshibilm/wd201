@@ -11,33 +11,33 @@ describe("todoList", () => {
         add({ title: "Service Vehicle", dueDate: today, completed: false });
         add({ title: "File taxes", dueDate: tomorrow, completed: false });
     });
-  test("should add a todo item", () => {
+  test("Test to add a todo", () => {
     const todoItemCount = all.length;
     add({ title: "Pay electric bill", dueDate: tomorrow, completed: false });
     expect(all.length).toBe(todoItemCount + 1);
   });
 
-  test("should mark a todo item as complete", () => {
+  test("Test to mark a todo as complete", () => {
     expect(all[0].completed).toBe(false);
     markAsComplete(0);
     expect(all[0].completed).toBe(true);
   });
  
-  test("cheacking the  retrieval of overdue items",()=>{
+  test("Test to retrieve overdue items",()=>{
     const overdueItems = overdue();
     const overdueDates = overdueItems.map((item)=> item.dueDate);
     const alloverdueDates = all.filter((item)=> item.dueDate < today).map((item)=> item.dueDate);
     expect(overdueDates).toEqual(alloverdueDates);
   })
   
-  test("checking  retrieval of due today items",()=>{
+  test("Test to retrieve due today items",()=>{
     const todayItems = dueToday();
     const todayDates = todayItems.map((item)=> item.dueDate);
     const alltodayDates = all.filter((items)=> items.dueDate ==  today).map((item)=> item.dueDate);
     expect(todayDates).toEqual(alltodayDates);
   })
 
-   test("checks retrieval of due later items",()=>{
+   test("Test to retrieve due later items",()=>{
     const laterItems = dueLater();
     const laterDates = laterItems.map((item)=> item.dueDate);
     const alllaterDates = all.filter((items)=> items.dueDate >  today).map((item)=> item.dueDate);
