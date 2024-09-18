@@ -98,4 +98,4 @@ let formattedItemsDueLater = todos.toDisplayableList(itemsDueLater);
 console.log(formattedItemsDueLater);
 console.log("\n\n");
 
-module.exports = {todoList, today, yesterday , tomorrow};
+module.exports = todoList
