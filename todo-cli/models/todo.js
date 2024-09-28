@@ -1,8 +1,6 @@
 // models/todo.js
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -18,17 +16,19 @@ module.exports = (sequelize, DataTypes) => {
 
       console.log("Overdue");
       let over = await Todo.overdue();
-      console.log(over.map((items)=> items.displayableString()).join("\n"))
+      console.log(over.map((items) => items.displayableString()).join("\n"));
       console.log("\n");
 
       console.log("Due Today");
       let todaydue = await Todo.dueToday();
-      console.log(todaydue.map((items)=> items.displayableString()).join("\n"))
+      console.log(
+        todaydue.map((items) => items.displayableString()).join("\n")
+      );
       console.log("\n");
 
       console.log("Due Later");
       let later = await Todo.dueToday();
-      console.log(later.map((items)=> items.displayableString()).join("\n"))
+      console.log(later.map((items) => items.displayableString()).join("\n"));
     }
     //Today date
     static today = new Date().toISOString().split("T")[0];
@@ -37,9 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       const over = await Todo.findAll({
         where: {
           dueDate: {
-            [sequelize.Sequelize.Op.lt] : this.today
-          }
-        }
+            [sequelize.Sequelize.Op.lt]: this.today,
+          },
+        },
       });
       return over;
     }
@@ -47,8 +47,8 @@ module.exports = (sequelize, DataTypes) => {
     static async dueToday() {
       const todaydue = await Todo.findAll({
         where: {
-          dueDate: this.today
-        }
+          dueDate: this.today,
+        },
       });
       return todaydue;
     }
@@ -57,9 +57,9 @@ module.exports = (sequelize, DataTypes) => {
       const later = await Todo.findAll({
         where: {
           dueDate: {
-            [sequelize.Sequelize.Op.gt] : this.today
-          }
-        }
+            [sequelize.Sequelize.Op.gt]: this.today,
+          },
+        },
       });
       return later;
     }
@@ -68,41 +68,32 @@ module.exports = (sequelize, DataTypes) => {
       const item = await Todo.findByPk(id);
       if (item) {
         item.completed = true;
-        await item.save()
+        await item.save();
       }
       console.log(`${id} is not founded`);
-      
     }
 
     displayableString() {
-      let checkbox = this.completed ? "[x]" : "[ ]";
+      const today = new Date().toISOString().split("T")[0];
+      const isDueToday = this.dueDate === today;
 
-      const checkToday = (date,t) => {
-        let date_arr = String(date).split("-");
-        let today_arr = String(t).split("-");
-
-        for (let i = 0; i < 8; i++) {
-          if (date_arr[i] != today_arr[i]) {
-            return false;
-          }
-        }
-        return true;
+      if (isDueToday) {
+        return `${this.id}. [${this.completed ? "x" : " "}] ${this.title}`;
+      } else {
+        return `${this.id}. [${this.completed ? "x" : " "}] ${this.title} ${this.dueDate}`;
       }
-
-      if(checkToday(this.dueDate,this.today)){
-        return `${this.id}. ${checkbox} ${this.title}`;
-      }
-      return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
-    
     }
   }
-  Todo.init({
-    title: DataTypes.STRING,
-    dueDate: DataTypes.DATEONLY,
-    completed: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'Todo',
-  });
+  Todo.init(
+    {
+      title: DataTypes.STRING,
+      dueDate: DataTypes.DATEONLY,
+      completed: DataTypes.BOOLEAN,
+    },
+    {
+      sequelize,
+      modelName: "Todo",
+    }
+  );
   return Todo;
 };
