@@ -3,11 +3,26 @@ const app = express();
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
 const { where } = require("sequelize");
+const path = require("path");
 app.use(bodyParser.json());
 
-app.get("/", function (request, response) {
-  response.send("Hello World");
+// Set up EJS as templating engine
+app.set("view engine", "ejs")
+
+app.get("/",  async (request, response) => {
+  const allTodos = await Todo.getTodos()
+  if (request.accepts("html")) {
+      return response.render("index",{
+        allTodos
+      })
+  }else{
+    return response.json({allTodos})
+  }
+  
 });
+
+// setup the style css
+app.use(express.static(path.join(__dirname,"public")));
 
 app.get("/todos", async function (_request, response) {
   console.log("Processing list of all Todos ...");
