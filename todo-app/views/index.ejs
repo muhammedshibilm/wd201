@@ -23,7 +23,7 @@
                 })
             }).then((res) => {
                 if (res.ok) {
-
+                    window.location.reload()
                 }
             }).catch((error) => {
                 console.error(error)
@@ -115,11 +115,11 @@
                 <div class="flex gap-2">
                     <h5 id="dueLater">Completed Items</h5>
                     <span id="count-completed" class="px-2 bg-gray-300 rounded">
-                        <%= dueLater.length %>
+                        <%= completedTodos.length %>
                     </span>
                 </div>
                 <ul class="list-none">
-                    <%- include("todos.ejs", {data: dueLater}) %>
+                    <%- include("todos.ejs", {data: completedTodos}) %>
                 </ul>
             </div>
 

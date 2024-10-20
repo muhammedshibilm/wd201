@@ -45,8 +45,18 @@ module.exports = (sequelize, DataTypes) => {
       return this.create({ title: title, dueDate: dueDate, completed: false });
     }
 
-    async setCompletionStatus() {
-      return this.update({ completed: true });
+    async setCompletionStatus({compledstatus}) {
+      console.log("working....",compledstatus);
+      
+      return this.update({ completed: compledstatus });
+    }
+
+    static async completedTodos(){
+      return this.findAll({
+        where:{
+          completed: true
+        }
+      })
     }
    
    static async deleteTodo(id){
