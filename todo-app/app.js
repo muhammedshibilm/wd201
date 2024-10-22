@@ -1,10 +1,9 @@
 const express = require("express");
 const app = express();
 var csrf = require("tiny-csrf")
-const { Todo } = require("./models");
+const { Todo , User } = require("./models");
 const bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
-const { where } = require("sequelize");
 const path = require("path");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
@@ -98,4 +97,25 @@ app.delete("/todos/:id", async function (request, response) {
   }
 });
 
+app.get("/signup",(req,res)=>{
+  return res.render("signup",{csrfToken: req.csrfToken()})
+})
+
+app.post("/users", async (request,response)=>{
+  console.log(request.body.firstName);
+  try {
+    const user = await User.create({
+      firstName: request.body.firstName,
+      lastName: request.body.lastName,
+      email: request.body.email,
+      password: request.body.password
+    });
+
+    response.redirect("/")
+  } catch (error) {
+    console.log(error);
+    
+  }
+  
+})
 module.exports = app;
